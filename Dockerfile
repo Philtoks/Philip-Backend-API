@@ -5,7 +5,7 @@ FROM node:14
 WORKDIR /app
 
 # copy the package.json to the container directory 
-COPY package.json ./
+COPY package*.json ./
 
 # install the dependencies 
 RUN npm install 
