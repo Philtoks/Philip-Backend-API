@@ -1,5 +1,5 @@
 
-import jsonUsers from '../user.json' with {type: "json"}; 
+import jsonUsers from '../user.json' with {type: 'json'}; 
 
 const getAllProducts = (req, res) => {
     res.status(200).json(jsonUsers);
