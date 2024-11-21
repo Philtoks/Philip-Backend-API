@@ -47,7 +47,7 @@ Step 1: Create a Dockerfile
 Step 2: From your Vscode, click on the search bar and select "Show and run commands" or SHIFT + Command + P (Mac users)
         Then search up "Publish to Github". This will move your folder to github and create a repo instead of creating in github and then cloning in your local machine
         
-Step 2: Create EC2 instance from AWS and SSH into the machine. 
+Step 2: Create EC2 instance from AWS, expose port 8091 and SSH into the machine. 
         Switch to root user "sudo -i" and install docker in your EC2 machine (follow steps from docker documentation)
         Also check if git is installed in the EC2 instance "git --version"
         run "git clone github_repo_URL" to clone your gihub repo
@@ -62,4 +62,3 @@ Step 5: Test your application on the browser Public_IP_of_EC2:HOST_PORT
         (If your container is not running, it means the command in your Dockerfile is not executing due to errors)
         (run "docker logs CONTAINER_NAME" to check the logs of the container and solve your issue)
 
-        
