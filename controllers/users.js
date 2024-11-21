@@ -1,5 +1,11 @@
 
-import jsonUsers from '../user.json' with {type: 'json'}; 
+const jsonUsers= [
+    { "id": 1, "name": "john" },
+    { "id": 2, "name": "peter" },
+    { "id": 3, "name": "susan" },
+    { "id": 4, "name": "anna" },
+    { "id": 5, "name": "emma" }
+  ];
 
 const getAllProducts = (req, res) => {
     res.status(200).json(jsonUsers);
