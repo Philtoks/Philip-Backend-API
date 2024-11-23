@@ -60,17 +60,17 @@ pipeline{
 
     }
     post {
-        always {
-            cleanWs()
-          //  sh 'docker image prune -fa'
-           // deleteDir()
-        }
+        
         success {
             echo 'Deploying Image was Successfully'
         }
         failure {
             echo 'Pushing Image to registry Failed. Check logs'
         }
-        
+        always {
+            cleanWs()
+            sh 'docker image prune -fa'
+            deleteDir()
+        }
     }
 }
