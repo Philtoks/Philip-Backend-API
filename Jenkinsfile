@@ -29,7 +29,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PSWD', usernameVariable: 'DOCKER_USRNM')]) {
                      // some block
                      echo 'Pushing Docker image to Docker Hub...'
-                     sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
+                     sh "docker login -u $DOCKER_USRNM -p-stdin $DOCKER_PSWD"
                     }
                     sh "docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:${env.BUILD_NUMBER}"
                     sh "docker push phildoc1/nodejshub:${env.BUILD_NUMBER}"
@@ -44,7 +44,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PSWD', usernameVariable: 'DOCKER_USRNM')]) {
                      // some block
                      echo 'Pulling Docker image from Docker Hub...'
-                     sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
+                     sh "docker login -u $DOCKER_USRNM -p-stdin $DOCKER_PSWD"
                     }
                     sh "docker pull phildoc1/nodejshub:${env.BUILD_NUMBER}"
                     sh '''if [docker ps -a | grep nodejshub]; then 
@@ -66,7 +66,7 @@ pipeline{
            // deleteDir()
         }
         success {
-            echo 'Pushing Image to Registry Successfully'
+            echo 'Deploying Image was Successfully'
         }
         failure {
             echo 'Pushing Image to registry Failed. Check logs'
