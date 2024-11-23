@@ -5,7 +5,7 @@ pipeline{
         }
     }
     environment{
-        DOCKER_NODE_IMAGE = 'phildoc1/nodejshub'
+        DOCKER_IMAGE = 'phildoc1/nodejshub'
         DOCKER_REGISTRY_CREDS = 'docker_hub'
     }
     stages{
@@ -19,7 +19,7 @@ pipeline{
             steps {
                 script {
                     echo 'Building docker image....'
-                    sh " docker build -t $DOCKER_NODE_IMAGE ."
+                    sh " docker build -t $DOCKER_IMAGE ."
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline{
                      echo 'Pushing Docker image to Docker Hub...'
                      sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
                     }
-                    sh "docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:V1"
+                    sh "docker tag ${DOCKER_IMAGE} phildoc1/nodejshub:V1"
                     sh 'docker push phildoc1/nodejshub:V1'
 
                 }
