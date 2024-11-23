@@ -31,7 +31,7 @@ pipeline{
                      echo 'Pushing Docker image to Docker Hub...'
                      sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
                     }
-                    sh 'docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:V1'
+                    sh "docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:V1"
                     sh 'docker push phildoc1/nodejshub:V1'
 
                 }
