@@ -6,7 +6,7 @@ pipeline{
     }
     environment{
         DOCKER_NODE_IMAGE = 'phildoc1/nodejshub'
-        DOCKER_REGISTRY_CREDS = credentials('docker_hub')
+        DOCKER_REGISTRY_CREDS = 'docker_hub'
     }
     stages{
         stage('Git checkout'){
