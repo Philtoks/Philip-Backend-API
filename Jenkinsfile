@@ -47,12 +47,7 @@ pipeline{
                      sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
                     }
                     sh "docker pull phildoc1/nodejshub:${env.BUILD_NUMBER}"
-                    sh '''if [docker ps -a | grep nodejshub]; then 
-                                echo 'Stopping container...'
-                                docker stop nodejshub
-                                docker rm nodejshub
-                          fi 
-                       '''
+                    sh 'docker stop nodejshub || true && docker rm nodejshub || true'
                     sh "docker run -d -p 8091:3000 --name nodejshub phildoc1/nodejshub:${env.BUILD_NUMBER}"
                 }
             }
