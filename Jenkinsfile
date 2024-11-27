@@ -48,14 +48,13 @@ pipeline{
          stage('Push to AWS ECR Registry') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: "${ECR_REGISTRY_CREDS}", passwordVariable: 'AWS_ECR_ACCESS_ID', usernameVariable: 'AWS_ECR_SECRET_KEY')]) {
-                     // some block
-                     echo 'Pushing Docker image from AWS ECR Registry...'
-                     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_URL}"
-                     sh "docker tag ${ECR_IMAGE} ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
-                     sh "docker push ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: "${ECR_REGISTRY_CREDS}", secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    // some block
+                        echo 'Pushing Docker image from AWS ECR Registry...'
+                        sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_URL}"
+                        sh "docker tag ${ECR_IMAGE} ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
+                        sh "docker push ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
                     }
-                    
                 }
             }
         }
