@@ -9,8 +9,7 @@ pipeline{
         ECR_IMAGE = 'nodejs-docker-app'
       //  DOCKER_REGISTRY_CREDS = 'docker_hub'
         ECR_REGISTRY_CREDS = 'ECR-key'
-        ECR_URL = '637423517639.dkr.ecr.us-east-1.amazonaws.com
-'
+        ECR_URL = '637423517639.dkr.ecr.us-east-1.amazonaws.com'
     }
     stages{
         stage('Git checkout'){
