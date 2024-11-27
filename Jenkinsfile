@@ -5,8 +5,12 @@ pipeline{
         }
     }
     environment{
-        DOCKER_NODE_IMAGE = 'phildoc1/nodejshub'
-        DOCKER_REGISTRY_CREDS = 'docker_hub'
+      //  DOCKER_NODE_IMAGE = 'phildoc1/nodejshub'
+        ECR_IMAGE = 'nodejs-docker-app'
+      //  DOCKER_REGISTRY_CREDS = 'docker_hub'
+        ECR_REGISTRY_CREDS = 'ECR-key'
+        ECR_URL = '637423517639.dkr.ecr.us-east-1.amazonaws.com
+'
     }
     stages{
         stage('Git checkout'){
@@ -19,10 +23,14 @@ pipeline{
             steps {
                 script {
                     echo 'Building docker image....'
-                    sh " docker build -t $DOCKER_NODE_IMAGE ."
+                  //  sh " docker build -t $DOCKER_NODE_IMAGE ."
+                   
+                   // bUild ECR image 
+                    sh "docker build -t $ECR_IMAGE ."
                 }
             }
         }
+        /*
         stage('Push Docker Image') {
             steps {
                 script {
@@ -31,14 +39,29 @@ pipeline{
                      echo 'Pushing Docker image to Docker Hub...'
                      sh "docker login -u $DOCKER_USRNM -p $DOCKER_PSWD"
                     }
-                    sh "docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:${env.BUILD_NUMBER}"
-                    sh "docker push phildoc1/nodejshub:${env.BUILD_NUMBER}"
+                   // sh "docker tag ${DOCKER_NODE_IMAGE} phildoc1/nodejshub:${env.BUILD_NUMBER}"
+                    sh "docker tag ${DOCKER_NODE_IMAGE} ${DOCKER_NODE_IMAGE}:${env.BUILD_NUMBER}"
+                    sh "docker push ${DOCKER_NODE_IMAGE}:${env.BUILD_NUMBER}"
 
                 }
             }
+        }*/
+         stage('Push to AWS ECR Registry') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${ECR_REGISTRY_CREDS}", passwordVariable: 'AWS_ECR_ACCESS_ID', usernameVariable: 'AWS_ECR_SECRET_KEY')]) {
+                     // some block
+                     echo 'Pushing Docker image from AWS ECR Registry...'
+                     sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_URL}"
+                     sh "docker tag ${ECR_IMAGE} ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
+                     sh "docker push ${ECR_URL}/${ECR_IMAGE}:${env.BUILD_NUMBER}"
+                    }
+                    
+                }
+            }
         }
-    
-        stage('Deploy to production') {
+        /*
+        stage('Deploy to Production') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PSWD', usernameVariable: 'DOCKER_USRNM')]) {
@@ -51,7 +74,8 @@ pipeline{
                     sh "docker run -d -p 8091:3000 --name nodejshub phildoc1/nodejshub:${env.BUILD_NUMBER}"
                 }
             }
-        }
+        }*/
+       
 
     }
     post {
@@ -64,8 +88,8 @@ pipeline{
         }
         always {
             cleanWs()
-            sh 'docker image prune -fa'
-            deleteDir()
+          //  sh 'docker image prune -fa'
+           // deleteDir()
         }
     }
 }

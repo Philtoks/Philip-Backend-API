@@ -62,3 +62,8 @@ Step 5: Test your application on the browser Public_IP_of_EC2:HOST_PORT
         (If your container is not running, it means the command in your Dockerfile is not executing due to errors)
         (run "docker logs CONTAINER_NAME" to check the logs of the container and solve your issue)
 
+HOW TO SET UP AWS ECR AND PUSH DOCKER IMAGES TO THE REGISTRY
+
+Prerequisite: 
+        - AWS CLI: Since we will be running shell scripts in Jenkins pipleine, we need to login to AWS via CLI. SO install AWS CLI
+        - IAM USer: Logging into the AWS CLI works by creating an IAM user first, and then passing that user’s credentials in the terminal.
