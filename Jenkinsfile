@@ -61,8 +61,9 @@ pipeline{
             }
             steps{
                 withSonarQubeEnv('SonarQube') {
-                    sh '''  ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Solar-Project \
-                        -Dsonar.projectVersion=1.0 \
+                    sh '''  ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=Solar-Project \
+                        
                         -Dsonar.sources=app.js 
                     '''
                 }
