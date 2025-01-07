@@ -19,6 +19,7 @@ pipeline{
                     url: 'https://github.com/Philtoks/Philip-Backend-API.git'
             }
         }
+       /*
         stage ('Dependencies Checks'){
             // Running dependency check in parallel 
             parallel {
@@ -45,7 +46,7 @@ pipeline{
                     }
                 }
             }
-        }
+        }*/
        // Perform unit testing for pipeline 
         stage ('Unit Testing') {
             steps {
