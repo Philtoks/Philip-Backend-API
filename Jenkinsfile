@@ -54,7 +54,7 @@ pipeline{
 
                 junit allowEmptyResults: true, keepProperties: true, stdioRetention: '', testResults: 'test-results.xml'
             }
-        }*/
+        }
         stage('SonarQube Analysis') {
             environment {
                 scannerHome = tool 'sonar-scanner';
