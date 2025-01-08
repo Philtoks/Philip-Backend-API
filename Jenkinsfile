@@ -4,6 +4,9 @@ pipeline{
             label 'agent1'
         }
     }
+    tools {
+        nodejs 'nodejs-23.5.0'
+    }
     environment{
       //  DOCKER_NODE_IMAGE = 'phildoc1/nodejshub'
         ECR_IMAGE = 'nodejs-docker-app'
@@ -19,7 +22,11 @@ pipeline{
                     url: 'https://github.com/Philtoks/Philip-Backend-API.git'
             }
         }
-       
+        stage ('installing dependencies'){
+            steps {
+                sh 'npm install'
+            }
+        }
         stage ('Dependencies Checks'){
             // Running dependency check in parallel 
             parallel {
@@ -36,7 +43,7 @@ pipeline{
                         dependencyCheck additionalArguments: ''' --scan \'./\'
                             --out \'./\'
                             --format \'ALL\'
-                            --prettyPrint''', odcInstallation: 'OWASP-Check-10' 
+                            --prettyPrint''', nvdCredentialsId: 'nvd-key', odcInstallation: 'OWASP-Check-10' 
 
                         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: true
 
