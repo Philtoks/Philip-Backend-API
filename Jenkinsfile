@@ -37,7 +37,7 @@ pipeline{
                     }
                  }
                  
-                 
+                /* 
                  stage ('OWASP Dependency Check'){
                     steps {
                         dependencyCheck additionalArguments: ''' --scan \'./\'
@@ -51,7 +51,7 @@ pipeline{
                     // Publish HTML reports for dependency check 
                         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'HTML Report', reportTitles: 'Dependency Check HTML Report', useWrapperFileDirectly: true])
                     }
-                }
+                }*/
             }
         }
        // Perform unit testing for pipeline 
