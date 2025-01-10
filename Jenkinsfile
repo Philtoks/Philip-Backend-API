@@ -72,7 +72,8 @@ pipeline{
                     sh '''  ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=Solar-Project \
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=app.js 
+                        -Dsonar.sources=app.js \
+                        -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
                     '''
                 }
                 
