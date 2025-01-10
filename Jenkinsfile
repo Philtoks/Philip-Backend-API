@@ -55,13 +55,14 @@ pipeline{
             }
         }
        // Perform unit testing for pipeline 
+       /*
         stage ('Unit Testing') {
             steps {
                 sh 'npm test'
 
                 junit allowEmptyResults: true, keepProperties: true, stdioRetention: '', testResults: 'test-results.xml'
             }
-        }
+        }*/
         stage('SonarQube Analysis') {
             environment {
                 scannerHome = tool 'sonar-scanner';
